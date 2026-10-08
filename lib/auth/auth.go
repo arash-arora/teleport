@@ -856,6 +856,10 @@ func NewServer(cfg *InitConfig, opts ...ServerOption) (as *Server, err error) {
 	}
 	as.ScopedAccessCache = scopedAccessCache
 
+	if as.oidcAuthService == nil {
+		as.oidcAuthService = newDefaultOIDCAuthService(as)
+	}
+
 	_, cacheEnabled := as.getCache()
 
 	// cluster config ttl cache *must* be set up after `opts` has been applied to the server because
